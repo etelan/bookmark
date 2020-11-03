@@ -1,0 +1,126 @@
+
+<style>
+  .center_pos {
+
+  /* Gets pos of middle of the screen, no matter the size or scroll. */
+  position: absolute;
+
+  /* Set Margain */
+  top: 50%;
+  left: 50%;
+
+  /* This moves the objects */
+  transform: translate(-50%, -50%);
+  }
+
+  .center_text { text-align: center; }
+
+  body, html {
+   height: 100%;
+ }
+ .left_pos {
+
+ /* Gets pos of middle of the screen, no matter the size or scroll. */
+ position: absolute;
+
+ /* Set Margain */
+ top: 50%;
+ left: 40%;
+
+ /* This moves the objects */
+ transform: translate(-50%, -50%);
+ }
+
+ .center_text { text-align: center; }
+
+ body, html {
+  height: 100%;
+}
+
+ .bg {
+   /* The image used */
+   background-image: url("images/cool-background.png");
+
+   /* Set it to be background */
+   z-index: -1;
+
+   /* Full height */
+   height: 100%;
+
+   /* Center and scale the image nicely */
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+ }
+
+ .white { color:white}
+
+ .large { font-size:30px }
+
+ .larger { font-size:72px }
+
+ .outline {
+   -webkit-text-stroke-width: 2px;
+   -webkit-text-stroke-color: black;
+ }
+
+ .submissionfield { width: 200; height: 50px; padding: 5px; font-size: 18px;}
+ .gray { background-color: #C0C0C0 }
+
+</style>
+
+
+
+<div class="center_pos white">
+
+  <!--TITLE-->
+  <h1 class="larger center_text outline"> Bookmarks </h1>
+
+  <label for="name">Category: <button type="submit">OK</button>
+
+  <!-- BULLET Bookmarks -->
+  <ul class="large">
+
+    <% @bookmarks.each do |bookmark| %>
+        <li>
+          <div style="display:inline-block">
+
+            <!-- Line With Buttons -->
+            <form class="center_text" action="/button-redirect" method="get">
+              <label for="name">
+
+                <%= bookmark %>
+
+                <input type="hidden" name="url" value=<%= bookmark %>/>
+                <input type="submit" name="action" value="D" >
+                <input type="submit" name="action" value="V" >
+              </label>
+            </form>
+
+          </div>
+        </li>
+
+    <% end %>
+
+  </ul>
+
+  <!-- FORM Add Bookmark -->
+  <form class="center_text" action="/add-bookmark" method="post">
+
+    <!-- Buttons and labels -->
+    <input type="text" class="gray submissionfield" size=60 name="bookmark" placeholder="http://www.google.com">
+
+    <!-- Spacer -->
+    <div>
+      &nbsp;
+    </div>
+    <!-- Submit -->
+    <div>
+      <input type="submit" value="Add Bookmark" style="padding: 9px 11px; font-size:18px">
+    </div>
+  </form>
+
+</div>
+
+<!-- IMAGE Background Loads Last -->
+<div class="bg"></div>
