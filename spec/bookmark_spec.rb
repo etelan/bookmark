@@ -2,20 +2,34 @@ require 'bookmark'
 
 describe Bookmark do
   describe '.all' do
-    it 'returns all bookmarks' do
+    it 'returns all bookmarks titles' do
 
       # Connect
       connection = PG.connect(dbname: 'bookmark_manager_test')
 
       # Add the test data
-      connection.exec("INSERT INTO bookmarks (url) VALUES ('http://www.makersacademy.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('http://www.destroyallsoftware.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('http://www.google.com');")
+      bookmark = Bookmark.add('http://www.testbookmark.com', 'Test Bookmark')
+      persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
+
 
       bookmarks = Bookmark.all
 
-      expect(bookmarks).to include("http://www.google.com")
+      expect(bookmark).to be_a Bookmark
+      expect(bookmark.id).to eq persisted_data.first['id']
+      expect(bookmark.title).to eq 'Test Bookmark'
+      expect(bookmark.url).to eq 'http://www.testbookmark.com'
     end
   end
 
+  describe '.create' do
+    it 'creates a new bookmark' do
+      bookmark = Bookmark.add('http://www.testbookmark.com', 'Test Bookmark')
+      persisted_data = PG.connect(dbname: 'bookmark_manager_test').query("SELECT * FROM bookmarks WHERE id = #{bookmark.id};")
+
+      expect(bookmark).to be_a Bookmark
+      expect(bookmark.id).to eq persisted_data.first['id']
+      expect(bookmark.title).to eq 'Test Bookmark'
+      expect(bookmark.url).to eq 'http://www.testbookmark.com'
+    end
+  end
 end

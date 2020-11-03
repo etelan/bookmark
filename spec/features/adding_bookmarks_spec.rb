@@ -1,5 +1,5 @@
 feature 'Adding bookmarks' do
-  scenario 'A user can Add bookmarks' do
+  scenario 'A user can Add bookmarks, return title' do
 
     connection = PG.connect(dbname: 'bookmark_manager_test')
 
@@ -8,8 +8,9 @@ feature 'Adding bookmarks' do
 
     visit('/bookmarks')
     fill_in :bookmark, with: 'https://en.wiki.sureai.net/Enderal:Phasmalism'
+    fill_in :title, with: 'Enderal'
     click_button('Add Bookmark')
 
-    expect(page).to have_content "https://en.wiki.sureai.net/Enderal:Phasmalism"
+    expect(page).to have_content "Enderal"
   end
 end

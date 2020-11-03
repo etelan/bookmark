@@ -12,8 +12,9 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/button-redirect' do
-    if params[:action] == "D"
-      redirect_string = '/delete?url=' + params[:url]
+    puts params[:action]
+    if params[:action] == "🗑"
+      redirect_string = '/delete?title=' + params[:title]
       redirect redirect_string, 307
     elsif params[:action] == "V"
       p "Viewing page..."
@@ -21,13 +22,13 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/delete' do
-    Bookmark.delete(params[:url])
+    Bookmark.delete(params[:title])
     redirect '/bookmarks'
   end
 
 
   post '/add-bookmark' do
-    Bookmark.add(params[:bookmark])
+    Bookmark.add(params[:bookmark], params[:title])
     redirect '/bookmarks'
   end
 

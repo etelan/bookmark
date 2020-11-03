@@ -2,25 +2,35 @@ require 'pg'
 
 class Bookmark
 
+  attr_reader :id, :title, :url
+
+  def initialize(id, title, url)
+    @id  = id
+    @title = title
+    @url = url
+  end
+
   def self.all
 
     connection = connect
 
     result = connection.exec("SELECT * FROM bookmarks;")
-    result.map { |bookmark| bookmark['url'] }
+    result.map do |bookmark|
+      Bookmark.new(bookmark['id'], bookmark['title'], bookmark['url'])
+    end
   end
 
-  def self.add(url)
+  def self.add(url, title)
 
     connection = connect
-    connection.prepare('add', 'insert into bookmarks (url) VALUES ($1);')
-    connection.exec_prepared('add', [ url ] )
+    connection.prepare('add', 'insert into bookmarks (url, title) VALUES ($1, $2);')
+    result = connection.exec_prepared('add', [ url , title ] )
   end
 
-  def self.delete(url)
-    puts "Deleting... " + url
+  def self.delete(title)
+    puts "Deleting... " + title
 
-    prepared_string = "delete from bookmarks where url='#{url}';"
+    prepared_string = "delete from bookmarks where title='#{title}';"
 
     puts prepared_string
 

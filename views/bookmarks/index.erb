@@ -54,18 +54,24 @@
  }
 
  .white { color:white}
+ .gray { color:#C0C0C0 }
 
  .large { font-size:30px }
 
- .larger { font-size:72px }
+ .larger { font-size:56px }
+ .largest { font-size:72px }
 
  .outline {
    -webkit-text-stroke-width: 2px;
    -webkit-text-stroke-color: black;
  }
+ .outline_l {
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: black;
+ }
 
  .submissionfield { width: 200; height: 50px; padding: 5px; font-size: 18px;}
- .gray { background-color: #C0C0C0 }
+ .gray_bck { background-color: #C0C0C0 }
 
 </style>
 
@@ -74,7 +80,7 @@
 <div class="center_pos white">
 
   <!--TITLE-->
-  <h1 class="larger center_text outline"> Bookmarks </h1>
+  <h1 class="largest center_text outline"> Bookmarks </h1>
 
   <!-- BULLET Bookmarks -->
   <ul class="large">
@@ -87,11 +93,11 @@
             <form class="center_text" action="/button-redirect" method="get">
               <label for="name">
 
-                <%= bookmark %>
+                <%= bookmark.title %>
 
-                <input type="hidden" name="url" value=<%= bookmark %>>
-                <input type="submit" name="action" value="D" >
-                <input type="submit" name="action" value="V" >
+                <input type="hidden" name="title" value=<%= bookmark.title %>>
+                <input type="submit" name="action" value="🗑" >
+                <input type="submit" name="action" value="🌎" >
               </label>
             </form>
 
@@ -105,8 +111,12 @@
   <!-- FORM Add Bookmark -->
   <form class="center_text" action="/add-bookmark" method="post">
 
+    <h1 class="white larger outline"> Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Link</h1>
+
+
     <!-- Buttons and labels -->
-    <input type="text" class="gray submissionfield" size=60 name="bookmark" placeholder="http://www.google.com">
+    <input type="text" class="gray_bck submissionfield" size=60 name="title" placeholder="Google">
+    <input type="text" class="gray_bck submissionfield" size=60 name="bookmark" placeholder="http://www.google.com">
 
     <!-- Spacer -->
     <div>

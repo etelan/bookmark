@@ -8,10 +8,11 @@ feature 'Deleting bookmarks' do
 
     visit('/bookmarks')
     fill_in :bookmark, with: 'https://en.wiki.sureai.net/Enderal:Phasmalism'
+    fill_in :title, with: 'Enderal'
     click_button('Add Bookmark')
 
-    click_button("D")
+    click_button("🗑")
 
-    expect(page).not_to have_content "https://en.wiki.sureai.net/Enderal:Phasmalism"
+    expect(page).not_to have_content "Enderal"
   end
 end
