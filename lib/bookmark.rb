@@ -22,9 +22,10 @@ class Bookmark
 
     prepared_string = "delete from bookmarks where url='#{url}';"
 
+    puts prepared_string
+
     connection = connect
-    connection.prepare('remove', prepared_string)
-    connection.exec_prepared('remove')
+    connection.exec(prepared_string)
   end
 
   private

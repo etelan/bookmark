@@ -13,7 +13,8 @@ class BookmarkManager < Sinatra::Base
 
   get '/button-redirect' do
     if params[:action] == "D"
-      redirect '/delete?url=' + params[:url]
+      redirect_string = '/delete?url=' + params[:url]
+      redirect redirect_string, 307
     elsif params[:action] == "V"
       p "Viewing page..."
     end
